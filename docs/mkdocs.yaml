@@ -1,0 +1,61 @@
+site_name: مستندات من
+site_url: https://example.com
+site_author: نام شما
+repo_url: https://github.com/yourusername/yourrepo
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.indexes
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: تغییر به حالت تاریک
+      primary: teal
+      accent: purple
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: تغییر به حالت روشن
+      primary: deep orange
+      accent: lime
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+nav:
+  - صفحه اصلی: index.md
+  
+  - راهنمای شروع:
+    - نصب و راه‌اندازی: getting-started/installation.md
+    - تنظیمات اولیه: getting-started/configuration.md
+    - مثال‌های سریع: getting-started/quick-examples.md
+  
+  - توسعه:
+    - API مرجع: development/api-reference.md
+    - تست‌ها: development/testing.md
+    - اشکال‌زدایی: development/debugging.md
+  
+  - آموزش‌ها:
+    - آموزش مقدماتی: tutorials/basic-tutorial.md
+    - آموزش پیشرفته: tutorials/advanced-tutorial.md
+    - نمونه‌های عملی: tutorials/practical-examples.md
+  
+  - درباره:
+    - درباره پروژه: about/project.md
+    - تیم توسعه: about/team.md
+    - مشارکت: about/contributing.md
+    - تغییرات: about/changelog.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yourusername
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/yourusername
