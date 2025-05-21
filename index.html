@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستندات پیشرفته API | سرویس ما</title>
+    
+    <!-- فونت‌های فارسی -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css">
+    
+    <!-- آیکون‌های Material و Font Awesome -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- استایل‌های اختصاصی -->
+    <style>
+        :root {
+            --primary-color: #673AB7;
+            --primary-dark: #512DA8;
+            --accent-color: #FFC107;
+            --text-primary: #2D3748;
+            --text-secondary: #4A5568;
+            --bg-color: #FFFFFF;
+            --sidebar-bg: #F7FAFC;
+            --code-bg: #F0F4F8;
+            --border-color: #E2E8F0;
+        }
+        
+        body {
+            font-family: 'Vazir', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* نوار کناری */
+        .sidebar {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            border-left: 1px solid var(--border-color);
+            padding: 1.5rem;
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+        
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+        }
+        
+        .sidebar-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin: 0;
+        }
+        
+        .sidebar-search {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            font-family: 'Vazir', sans-serif;
+        }
+        
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .nav-section-title {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .nav-item {
+            margin-bottom: 0.25rem;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(103, 58, 183, 0.1);
+            color: var(--primary-dark);
+        }
+        
+        .nav-link.active {
+            font-weight: bold;
+        }
+        
+        .nav-link i {
+            width: 24px;
+            text-align: center;
+            margin-left: 8px;
+            font-size: 1.1rem;
+            vertical-align: middle;
+        }
+        
+        /* محتوای اصلی */
+        .main-content {
+            flex: 1;
+            padding: 2rem 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin: 0;
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+        }
+        
+        /* محتوای مستندات */
+        .doc-section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .endpoint-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.25rem;
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-weight: bold;
+            font-family: monospace;
+            margin-left: 1rem;
+        }
+        
+        .get { background-color: #48BB78; }
+        .post { background-color: #4299E1; }
+        .put { background-color: #ED8936; }
+        .delete { background-color: #F56565; }
+        .patch { background-color: #9F7AEA; }
+        
+        .path {
+            font-family: monospace;
+            flex-grow: 1;
+        }
+        
+        .endpoint-body {
+            padding: 1.25rem;
+        }
+        
+        .endpoint-title {
+            font-size: 1.25rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .param-table th, .param-table td {
+            padding: 0.75rem 1rem;
+            text-align: right;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .param-table th {
+            background-color: var(--sidebar-bg);
+            font-weight: bold;
+        }
+        
+        .param-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .code-block {
+            background-color: var(--code-bg);
+            border-radius: 4px;
+            padding: 1rem;
+            font-family: 'Fira Code', monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        /* پاورقی */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            transition: color 0.2s;
+        }
+        
+        .social-link:hover {
+            color: var(--primary-color);
+        }
+        
+        /* حالت تاریک */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #B39DDB;
+                --primary-dark: #9575CD;
+                --text-primary: #E2E8F0;
+                --text-secondary: #A0AEC0;
+                --bg-color: #1A202C;
+                --sidebar-bg: #2D3748;
+                --code-bg: #2D3748;
+                --border-color: #4A5568;
+            }
+            
+            .endpoint-card {
+                background-color: #2D3748;
+            }
+            
+            .param-table th {
+                background-color: #4A5568;
+            }
+        }
+        
+        /* طراحی واکنشگرا */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                border-left: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .main-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- نوار کناری -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/logo.svg" alt="لوگو" class="logo">
+                <h1 class="sidebar-title">مستندات API</h1>
+            </div>
+            
+            <input type="text" class="sidebar-search" placeholder="جستجو در مستندات...">
+            
+            <div class="nav-section">
+                <h3 class="nav-section-title">شروع کار</h3>
+                <ul class="nav-links">
+                    <li class="nav-item"><a href="#introduction" class="nav-link active"><i class="fas fa-home"></i> معرفی</a></li>
+                    <li class="nav-item"><a href="#authentication" class="nav-link"><i class="fas fa-key"></i> احراز هویت</a></li>
+                    <li class="nav-item"><a href="#quickstart" class="nav-link"><i class="fas fa-rocket"></i> شروع سریع</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <h3 class="nav-section-title">نقاط پایانی</h3>
+                <ul class="nav-links">
+                    <li class="nav-item"><a href="#users" class="nav-link"><i class="fas fa-users"></i> کاربران</a></li>
+                    <li class="nav-item"><a href="#products" class="nav-link"><i class="fas fa-box-open"></i> محصولات</a></li>
+                    <li class="nav-item"><a href="#orders" class="nav-link"><i class="fas fa-shopping-cart"></i> سفارشات</a></li>
+                    <li class="nav-item"><a href="#payment" class="nav-link"><i class="fas fa-credit-card"></i> پرداخت</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <h3 class="nav-section-title">نمونه کدها</h3>
+                <ul class="nav-links">
+                    <li class="nav-item"><a href="#python" class="nav-link"><i class="fab fa-python"></i> Python</a></li>
+                    <li class="nav-item"><a href="#javascript" class="nav-link"><i class="fab fa-js"></i> JavaScript</a></li>
+                    <li class="nav-item"><a href="#php" class="nav-link"><i class="fab fa-php"></i> PHP</a></li>
+                    <li class="nav-item"><a href="#curl" class="nav-link"><i class="fas fa-terminal"></i> cURL</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <h3 class="nav-section-title">راهنما</h3>
+                <ul class="nav-links">
+                    <li class="nav-item"><a href="#errors" class="nav-link"><i class="fas fa-exclamation-circle"></i> کدهای خطا</a></li>
+                    <li class="nav-item"><a href="#faq" class="nav-link"><i class="fas fa-question-circle"></i> سوالات متداول</a></li>
+                </ul>
+            </div>
+        </aside>
+        
+        <!-- محتوای اصلی -->
+        <main class="main-content">
+            <div class="header">
+                <h1 class="page-title">مستندات API سرویس ما</h1>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            
+            <div class="doc-section" id="introduction">
+                <h2 class="section-title">معرفی API</h2>
+                <p>API سرویس ما یک رابط برنامه‌نویسی RESTful است که به شما امکان می‌دهد با سرویس ما تعامل داشته باشید. این مستندات تمام نقاط پایانی موجود، پارامترهای مورد نیاز و پاسخ‌های ممکن را پوشش می‌دهد.</p>
+                
+                <div class="code-block">
+                    <pre># پایه URL برای تمام درخواست‌ها
+BASE_URL = "https://api.example.com/v2"</pre>
+                </div>
+                
+                <h3>ویژگی‌های کلیدی</h3>
+                <ul>
+                    <li>پشتیبانی از JSON برای تمام درخواست‌ها و پاسخ‌ها</li>
+                    <li>احراز هویت از طریق توکن JWT</li>
+                    <li>مکانیزم استاندارد برای خطاها</li>
+                    <li>پاسخ‌های سریع و بهینه</li>
+                    <li>مستندات جامع با نمونه‌کدهای آماده</li>
+                </ul>
+            </div>
+            
+            <div class="doc-section" id="authentication">
+                <h2 class="section-title">احراز هویت</h2>
+                <p>برای دسترسی به اکثر نقاط پایانی API، شما نیاز به یک توکن احراز هویت دارید. این توکن باید در هدر تمام درخواست‌ها ارسال شود.</p>
+                
+                <div class="endpoint-card">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/auth/login</span>
+                    </div>
+                    <div class="endpoint-body">
+                        <h3 class="endpoint-title">دریافت توکن دسترسی</h3>
+                        <p>برای دریافت توکن دسترسی، نام کاربری و رمز عبور خود را به این نقطه پایانی ارسال کنید.</p>
+                        
+                        <h4>پارامترهای درخواست</h4>
+                        <table class="param-table">
+                            <thead>
+                                <tr>
+                                    <th>نام</th>
+                                    <th>نوع</th>
+                                    <th>الزامی</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>username</td>
+                                    <td>string</td>
+                                    <td>بله</td>
+                                    <td>نام کاربری شما</td>
+                                </tr>
+                                <tr>
+                                    <td>password</td>
+                                    <td>string</td>
+                                    <td>بله</td>
+                                    <td>رمز عبور شما</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <h4>مثال درخواست</h4>
+                        <div class="code-block">
+                            <pre>POST /auth/login HTTP/1.1
+Host: api.example.com
+Content-Type: application/json
+
+{
+    "username": "your_username",
+    "password": "your_password"
+}</pre>
+                        </div>
+                        
+                        <h4>مثال پاسخ</h4>
+                        <div class="code-block">
+                            <pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "expires_in": 3600,
+    "token_type": "Bearer"
+}</pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>استفاده از توکن</h3>
+                <p>پس از دریافت توکن، آن را در هدر Authorization تمام درخواست‌ها قرار دهید:</p>
+                
+                <div class="code-block">
+                    <pre>Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</pre>
+                </div>
+            </div>
+            
+            <!-- بخش‌های دیگر مستندات -->
+            
+            <div class="footer">
+                <p>© 2023 شرکت ما. تمام حقوق محفوظ است.</p>
+                <p>نسخه API: 2.1.0</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // تغییر تم تاریک/روشن
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            
+            if (body.classList.contains('dark-theme')) {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // بررسی تم ذخیره شده
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        // هایلایت لینک فعال در نوار کناری
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
